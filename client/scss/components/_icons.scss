@@ -1,0 +1,170 @@
+@use 'sass:string';
+
+@font-face {
+  font-family: $font-wagtail-icons;
+  src: url('../fonts/wagtail.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+// Set SVG icons to use the current text color in the location they appear as
+// their default fill color. Can be overridden for a specific icon by either
+// the color or fill properties.
+.icon {
+  fill: currentColor;
+}
+
+.icon.teal {
+  color: $color-teal-darker;
+}
+
+.icon.white {
+  color: $color-white;
+}
+
+.icon:before,
+.icon:after {
+  @include icon(); // from _mixins.scss
+}
+
+.icon:after {
+  text-align: end;
+}
+
+// =============================================================================
+// Icon factory methods
+// =============================================================================
+
+@each $icon, $content in $icons {
+  .icon-#{$icon}:before {
+    content: string.quote(#{$content});
+  }
+}
+
+@each $icon, $content in $icons-after {
+  .icon-#{$icon}:after {
+    content: string.quote(#{$content});
+  }
+}
+
+// =============================================================================
+// Custom config for various icons
+// =============================================================================
+.icon-download {
+  // Credit: Icon made by Freepik from Flaticon.com
+}
+
+.icon-view:before,
+.icon-no-view:before {
+  // icon-font
+  vertical-align: -3.5px;
+  font-size: 1.1rem;
+}
+
+.icon-spinner:after,
+.icon-spinner:before {
+  // iconfont
+  width: 1em;
+  animation: spin-wag 0.5s infinite linear;
+  display: inline-block;
+}
+
+// For SVG icons, add spinner styles onto the use element,
+// so an icon can be turned into a spinner by changing the href only.
+// This allows us to switch any icon to a spinner with much less boilerplate.
+use[href='#icon-spinner'] {
+  animation: spin-wag 0.5s infinite linear;
+  transform-origin: center;
+}
+
+.icon-horizontalrule:before {
+  font-family: $font-sans;
+}
+
+.icon-larger:before {
+  font-size: 1.5em;
+}
+
+.icon.text-replace {
+  // iconfont
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+
+  &:before {
+    margin-inline-end: 0;
+    font-size: 1rem;
+    display: inline-block;
+    width: 100%;
+    line-height: 1.2em;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+.text-replace {
+  font-size: 0;
+  line-height: 0;
+  overflow: hidden;
+
+  .icon {
+    @include svg-icon(1rem, middle);
+  }
+}
+
+@keyframes spin-wag {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-spinner:after {
+  display: inline-block;
+  line-height: 1;
+}
+
+// CSS-only circled question mark.
+// <span class="icon-help-inverse" aria-hidden="true"></span>
+.icon-help-inverse {
+  $size: 15px;
+
+  &:before {
+    display: inline-block;
+    width: $size;
+    height: $size;
+    line-height: $size;
+    font-size: 1.1em;
+    text-align: center;
+    border-radius: 100%;
+    color: $color-grey-2;
+    border: 1px solid currentColor;
+  }
+}
+
+// stylelint-disable-next-line no-duplicate-selectors
+.icon {
+  &.initial {
+    @include svg-icon(1em);
+    vertical-align: initial;
+  }
+
+  &.default {
+    @include svg-icon(1.5em);
+  }
+
+  &--flipped {
+    transform: scaleX(-1);
+  }
+}
+
+.icon.locale-error {
+  vertical-align: text-top;
+  margin-inline-end: 0.5em;
+  width: 1.5em;
+  height: 1.5em;
+  color: theme('colors.critical.200');
+}

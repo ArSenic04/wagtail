@@ -1,0 +1,16 @@
+.Draftail-CommentControl .Draftail-ToolbarButton {
+  color: theme('colors.secondary.100');
+
+  .icon {
+    width: theme('spacing.5');
+    height: theme('spacing.5');
+  }
+
+  &:not(:hover) .icon-comment-add-reversed {
+    display: none;
+  }
+
+  &:hover .icon-comment-add {
+    display: none;
+  }
+}

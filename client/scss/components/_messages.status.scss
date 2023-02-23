@@ -1,0 +1,13 @@
+.status-msg {
+  &.success {
+    color: theme('colors.positive.100');
+  }
+
+  &.failure {
+    color: theme('colors.critical.200');
+  }
+
+  &.warning {
+    color: theme('colors.warning.100');
+  }
+}
